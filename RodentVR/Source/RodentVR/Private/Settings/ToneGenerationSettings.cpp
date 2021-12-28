@@ -23,6 +23,16 @@ void UToneGenerationSettings::SetToneDurationSec(float ToneDurationSecValue)
 	this->ToneDurationSec = ToneDurationSecValue;
 }
 
+bool UToneGenerationSettings::GetIsPlayToneContinuouslyEnabled()
+{
+	return this->PlayToneContinuously;
+}
+
+void UToneGenerationSettings::SetIsPlayToneContinuouslyEnabled(bool IsPlayToneContinuouslyEnabledValue)
+{
+	this->PlayToneContinuously = IsPlayToneContinuouslyEnabledValue;
+}
+
 float UToneGenerationSettings::GetTonePitchHz()
 {
 	return this->TonePitchHz;

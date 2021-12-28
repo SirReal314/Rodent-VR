@@ -67,6 +67,10 @@ TArray<AActor*> UMazeSpawner::GetActorsFromMazeSettings(UMazeSettings* MazeSetti
 		{
 			UMazeSpawner::AddIfValid(Actors, RegionSettings);
 		}
+		for (URegionSystemSettings* RegionSystemSettings : MazeSettings->GetRegionSystemSettings())
+		{
+			UMazeSpawner::AddIfValid(Actors, RegionSystemSettings);
+		}
 	}
 
 	return Actors;

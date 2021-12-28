@@ -57,8 +57,13 @@ void UMazeSettingsXmlReader::LoadPlayerStart(UMazeSettings* MazeSettings, rapidx
 	{
 		UXmlFileReader::GetActorSettingsFromNode(PlayerStartNode, StartPosition);
 	}
+	float DelayBetweenRuns = UXmlFileReader::GetFloatFromAttribute(PlayerStartNode, "DelayBetweenRuns", 0.0f);
+	float MazeIterations = UXmlFileReader::GetFloatFromAttribute(PlayerStartNode, "MazeIterations", 1.0f);
 
 	MazeSettings->SetPlayerStart(StartPosition);
+	MazeSettings->SetDelay(DelayBetweenRuns);
+	MazeSettings->SetMazeIterations(MazeIterations);
+	MazeSettings->SetMazeIterator(MazeIterations);
 }
 
 
@@ -162,6 +167,7 @@ void UMazeSettingsXmlReader::LoadRegions(UMazeSettings* MazeSettings, rapidxml::
 		{
 			bool IsRewardDispensingEnabled = UXmlFileReader::GetBoolFromAttribute(RegionNode, "IsRewardDispensingEnabled", true);
 			float RewardDeviceDispensingDurationSec = UXmlFileReader::GetFloatFromAttribute(RegionNode, "RewardDeviceDispensingDurationSec", 1.0f);
+			bool DispenseContinuously = UXmlFileReader::GetBoolFromAttribute(RegionNode, "DispenseContinuously", false);
 			UToneGenerationSettings* ToneGenerationSettings = UXmlFileReader::GetToneGenerationSettingsFromNode(RegionNode->first_node("ToneGeneration"));
 			bool IsNosePoke = UXmlFileReader::GetBoolFromAttribute(RegionNode, "IsNosePoke", false);
 			FString DeviceId = UXmlFileReader::GetStringFromAttribute(RegionNode, "DeviceId", "");
@@ -172,6 +178,7 @@ void UMazeSettingsXmlReader::LoadRegions(UMazeSettings* MazeSettings, rapidxml::
 			Region->SetRegionId(RegionId);
 			Region->SetIsRewardDispensingEnabled(IsRewardDispensingEnabled);
 			Region->SetRewardDeviceDispensingDurationSec(RewardDeviceDispensingDurationSec);
+			Region->SetIsDispenseContinuouslyEnabled(DispenseContinuously);
 			Region->SetToneGenerationSettings(ToneGenerationSettings);
 			Region->SetRewardDevice(Device);
 			Region->SetIsNosePoke(IsNosePoke);

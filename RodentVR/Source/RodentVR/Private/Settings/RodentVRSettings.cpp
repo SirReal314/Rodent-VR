@@ -226,6 +226,9 @@ void URodentVRSettings::ClearRewardDevices()
 	this->OnRodentVRSettingsChanged();
 }
 
+/*
+ * Maze Playlist
+*/
 TArray<UMazeSettings*> URodentVRSettings::GetMazePlaylist()
 {
 	return this->MazePlaylist;

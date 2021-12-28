@@ -29,7 +29,6 @@ public:
 		UMazeSettings* GetSettings();
 	UFUNCTION(BlueprintSetter)
 		void SetSettings(UMazeSettings* SettingsValue);
-
 	UFUNCTION(BlueprintCallable)
 	void UpdateFromSettings();
 

@@ -44,16 +44,35 @@ void URewardDispenserComponent::DispenseReward(UDevice* Device, float RewardDevi
 		{
 			UNIDAQ::control_NIDAQ(true, Device->GetDevicePath());
 
-			if (RewardDeviceDispensingDurationSec <= 0.0f || RewardDeviceDispensingDurationSec > 25.0f)
+			/*if (RewardDeviceDispensingDurationSec <= 0.0f || RewardDeviceDispensingDurationSec > 25.0f)
 			{
 				RewardDeviceDispensingDurationSec = 25.0f;
-			}
+			}*/
 
 			GetWorld()->GetTimerManager().SetTimer(this->DispensingTimerHandle, this, &URewardDispenserComponent::StopDispensingRewards, 1.0f, false, RewardDeviceDispensingDurationSec);
-
 		}
 	}
 }
+
+/*void URewardDispenserComponent::DispenseReward(UDevice* Device)
+{
+	URodentVRGameInstance* GameInstance = (URodentVRGameInstance*)UGameplayStatics::GetGameInstance(this);
+	if (GameInstance->GetRodentVRSettings()->GetIsNidaqEnabled())
+	{
+		if (IsValid(Device))
+		{
+			UNIDAQ::control_NIDAQ(true, Device->GetDevicePath());
+
+			if (RewardDeviceDispensingDurationSec < 0.0f)
+			{
+				RewardDeviceDispensingDurationSec = 0.0f;
+			}
+
+			GetWorld()->GetTimerManager().SetTimer(this->DispensingTimerHandle, this, &URewardDispenserComponent::StopDispensingRewards, 1.0f, false, -1);
+
+		}
+	}
+}*/
 
 void URewardDispenserComponent::StopDispensingRewards()
 {

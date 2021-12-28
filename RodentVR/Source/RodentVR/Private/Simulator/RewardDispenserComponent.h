@@ -30,6 +30,9 @@ public:
 	UFUNCTION()
 		void DispenseReward(UDevice* Device, float RewardDeviceDispensingDurationSec);
 
+	/*UFUNCTION()
+		void DispenseReward(UDevice* Device);*/
+
 	UFUNCTION()
 		void StopDispensingRewards();
 };

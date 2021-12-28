@@ -36,6 +36,8 @@ void UMazeSettingsXmlWriter::SavePlayerStart(rapidxml::xml_document<>* Document,
 {
 	rapidxml::xml_node<>* PlayerStartNode = UXmlFileWriter::AddNode(Document, Root, "PlayerStart");
 	UXmlFileWriter::AddActorSettingsToNode(Document, PlayerStartNode, MazeSettings->GetPlayerStart());
+	UXmlFileWriter::AddFloatAttribute(Document, PlayerStartNode, "DelayBetweenRuns", MazeSettings->GetDelay());
+	UXmlFileWriter::AddFloatAttribute(Document, PlayerStartNode, "MazeIterations", MazeSettings->GetMazeIterations());
 }
 
 void UMazeSettingsXmlWriter::SaveTextures(rapidxml::xml_document<>* Document, rapidxml::xml_node<>* Root, UMazeSettings* MazeSettings)
@@ -59,6 +61,7 @@ void UMazeSettingsXmlWriter::SaveRegions(rapidxml::xml_document<>* Document, rap
 		UXmlFileWriter::AddStringAttribute(Document, RegionNode, "RegionId", Region->GetRegionId());
 		UXmlFileWriter::AddBoolAttribute(Document, RegionNode, "IsRewardDispensingEnabled", Region->GetIsRewardDispensingEnabled());
 		UXmlFileWriter::AddFloatAttribute(Document, RegionNode, "RewardDeviceDispensingDurationSec", Region->GetRewardDeviceDispensingDurationSec());
+		UXmlFileWriter::AddBoolAttribute(Document, RegionNode, "DispenseContinuously", Region->GetIsDispenseContinuouslyEnabled());
 		UXmlFileWriter::AddToneGenerationSettingsNode(Document, RegionNode, "ToneGeneration", Region->GetToneGenerationSettings());
 		UXmlFileWriter::AddBoolAttribute(Document, RegionNode, "IsNosePoke", Region->GetIsNosePoke());
 		FString DeviceId = TEXT("");

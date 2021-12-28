@@ -8,6 +8,10 @@
 #include "Hardware/NIDAQ/NIDAQ.h"
 #include "MazeSpawner.h"
 
+#include <iostream>
+#include <chrono>
+#include <thread>
+
 FMazeLoadedDelegate ASimulatorGameMode::OnMazeLoadedDelegate;
 FMazeFinishedDelegate ASimulatorGameMode::OnMazeFinishedDelegate;
 
@@ -57,6 +61,7 @@ void ASimulatorGameMode::Tick(float DeltaSeconds)
 	{
 		if (this->StopConditionsChecker->AreStopConditionsMet(this))
 		{
+	
 			this->OnMazeFinished();
 			this->StopConditionsChecker = nullptr;
 
@@ -65,6 +70,63 @@ void ASimulatorGameMode::Tick(float DeltaSeconds)
 	}
 }
 
+void ASimulatorGameMode::LoadNextMaze()
+{
+	URodentVRGameInstance* GameInstance = Cast<URodentVRGameInstance>(UGameplayStatics::GetGameInstance(this));
+	if (IsValid(GameInstance))
+	{
+		this->StopNIDAQDevices();
+		URodentVRSettings* RodentVRSettings = GameInstance->GetRodentVRSettings();
+		
+		if (IsValid(RodentVRSettings) && RodentVRSettings->GetMazePlaylist().Num() > 0)
+		{
+			UMazeSettings* MazeSettings = RodentVRSettings->GetMazePlaylist()[this->CurrentMazeIndex];
+			if (MazeSettings->IsFirst())
+			{
+				MazeSettings->SetIsFirst(false);
+				MazeSettings->ReverseIterateMaze();
+			}
+			else
+			{
+				std::chrono::milliseconds timespan((int)(MazeSettings->GetDelay() * 1000));
+				std::this_thread::sleep_for(timespan);
+			}
+
+			if (MazeSettings->GetMazeIterator() > 1) 
+			{
+				MazeSettings->IterateMaze();
+			}
+			else
+			{	
+				MazeSettings->SetMazeIterator(MazeSettings->GetMazeIterations());
+				MazeSettings->SetIsFirst(true);
+				this->CurrentMazeIndex++;
+				if (this->CurrentMazeIndex < RodentVRSettings->GetMazePlaylist().Num())
+				{
+					MazeSettings = RodentVRSettings->GetMazePlaylist()[this->CurrentMazeIndex];
+					GameInstance->SetCurrentMaze(MazeSettings);
+					MazeSettings->SetIsFirst(false);
+				}
+				else
+				{
+					GameInstance->GoToPage(PageEnum::MAINMENU);
+					return;
+				}
+			}
+			UMazeSpawner::SpawnMaze(this, MazeSettings, false, false);
+			this->StopConditionsChecker = NewObject<UStopConditionsChecker>();
+			this->StopConditionsChecker->SetStopConditions(MazeSettings->GetStopConditions());
+			this->StopConditionsChecker->InitStopConditions(this);
+			this->OnMazeLoaded();
+		}
+		else
+		{
+			GameInstance->GoToPage(PageEnum::MAINMENU);
+		}
+	}
+}
+
+/*
 void ASimulatorGameMode::LoadNextMaze()
 {
 	URodentVRGameInstance* GameInstance = Cast<URodentVRGameInstance>(UGameplayStatics::GetGameInstance(this));
@@ -92,6 +154,7 @@ void ASimulatorGameMode::LoadNextMaze()
 		}
 	}
 }
+*/
 
 void ASimulatorGameMode::OnMazeLoaded()
 {

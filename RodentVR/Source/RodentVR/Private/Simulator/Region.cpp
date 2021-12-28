@@ -115,19 +115,33 @@ void ARegion::OnOverlapBegin(UPrimitiveComponent* OverlappedComponent, AActor* O
 	{
 		this->OnRegionEnter(this->Settings);
 
-			if (this->Settings->GetIsRewardDispensingEnabled())
+		if (this->Settings->GetIsRewardDispensingEnabled())
+		{
+			UDevice* Device = this->Settings->GetRewardDevice();
+			if (IsValid(Device))
 			{
-				UDevice* Device = this->Settings->GetRewardDevice();
-					if (IsValid(Device))
-					{
-						this->RewardDispenserComponent->DispenseReward(Device, this->Settings->GetRewardDeviceDispensingDurationSec());
-					}
+				if (this->Settings->GetIsDispenseContinuouslyEnabled())
+				{
+					this->RewardDispenserComponent->DispenseReward(Device, std::numeric_limits<float>::infinity());
+				}
+				else
+				{
+					this->RewardDispenserComponent->DispenseReward(Device, this->Settings->GetRewardDeviceDispensingDurationSec());
+				}
 			}
+		}
 		UToneGenerationSettings* ToneGenerationSettings = this->Settings->GetToneGenerationSettings();
 		if (IsValid(ToneGenerationSettings) && ToneGenerationSettings->GetIsToneGenerationEnabled())
 		{
 			URodentVRGameInstance* Instance = (URodentVRGameInstance*)UGameplayStatics::GetGameInstance(this);
-			Instance->GetToneGenerator(this)->StartTone(ToneGenerationSettings->GetToneDurationSec(), ToneGenerationSettings->GetTonePitchHz(), ToneGenerationSettings->GetToneVolumePercent());
+			if (ToneGenerationSettings->GetIsPlayToneContinuouslyEnabled())
+			{
+				Instance->GetToneGenerator(this)->StartTone(std::numeric_limits<float>::infinity(), ToneGenerationSettings->GetTonePitchHz(), ToneGenerationSettings->GetToneVolumePercent());
+			}
+			else
+			{
+				Instance->GetToneGenerator(this)->StartTone(ToneGenerationSettings->GetToneDurationSec(), ToneGenerationSettings->GetTonePitchHz(), ToneGenerationSettings->GetToneVolumePercent());
+			}
 		}
 	}
 }

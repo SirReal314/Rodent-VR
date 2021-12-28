@@ -29,6 +29,8 @@ private:
 		UToneGenerationSettings* ToneGenerationSettings;
 	UPROPERTY(BlueprintGetter = GetIsNosePoke, BlueprintSetter = SetIsNosePoke)
 		bool IsNosePoke;
+	UPROPERTY(BlueprintGetter = GetIsDispenseContinuouslyEnabled, BlueprintSetter = SetIsDispenseContinuouslyEnabled)
+		bool IsDispenseContinuouslyEnabled;
 
 public:
 	URegionSettings();
@@ -57,4 +59,8 @@ public:
 		bool GetIsNosePoke();
 	UFUNCTION(BlueprintSetter)
 		void SetIsNosePoke(bool IsNosePokeValue);
+	UFUNCTION(BlueprintGetter)
+		bool GetIsDispenseContinuouslyEnabled();
+	UFUNCTION(BlueprintSetter)
+		void SetIsDispenseContinuouslyEnabled(bool IsDispenseContinuouslyEnabledValue);
 };

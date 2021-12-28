@@ -4,16 +4,20 @@
 
 #include "CoreMinimal.h"
 #include "Settings/ActorSettings.h"
-#include "StartPositionSettings.generated.h"
+#include "RegionSystemSettings.generated.h"
 
-/**
- * 
- */
 UCLASS()
-class UStartPositionSettings : public UActorSettings
+class URegionSystemSettings : public UActorSettings
 {
 	GENERATED_BODY()
 	
-public:
-	UStartPositionSettings();
+public:	
+	
+
+protected:
+
+
+public:	
+	
+
 };

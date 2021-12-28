@@ -71,3 +71,13 @@ void URegionSettings::SetIsNosePoke(bool IsNosePokeValue)
 {
 	this->IsNosePoke = IsNosePokeValue;
 }
+
+bool URegionSettings::GetIsDispenseContinuouslyEnabled()
+{
+	return this->IsDispenseContinuouslyEnabled;
+}
+
+void URegionSettings::SetIsDispenseContinuouslyEnabled(bool IsDispenseContinuouslyEnabledValue)
+{
+	this->IsDispenseContinuouslyEnabled = IsDispenseContinuouslyEnabledValue;
+}

@@ -21,6 +21,56 @@ bool UMazeSettings::DoesMazeHaveSettings() const
 	return HasStopConditions || HasTextures || HasMazeObjects || HasRegions;
 }
 
+float UMazeSettings::GetMazeIterations()
+{
+	return this->Iterations;
+}
+
+void UMazeSettings::SetMazeIterations(float IterationsValue)
+{
+	this->Iterations = IterationsValue;
+}
+
+float UMazeSettings::GetMazeIterator()
+{
+	return this->Iterator;
+}
+
+void UMazeSettings::SetMazeIterator(float IteratorValue)
+{
+	this->Iterator = IteratorValue;
+}
+
+void UMazeSettings::IterateMaze()
+{
+	this->Iterator--;
+}
+
+void UMazeSettings::ReverseIterateMaze()
+{
+	this->Iterator++;
+}
+
+float UMazeSettings::GetDelay()
+{
+	return this->Delay;
+}
+
+void UMazeSettings::SetDelay(float Value)
+{
+	this->Delay = Value;
+}
+
+bool UMazeSettings::IsFirst()
+{
+	return this->First;
+}
+
+void UMazeSettings::SetIsFirst(bool Value)
+{
+	this->First = Value;
+}
+
 FString UMazeSettings::GetMazeName()
 {
 	return this->MazeName;
@@ -135,6 +185,37 @@ void UMazeSettings::AddMazeObject(UMazeObjectSettings* MazeObjectValue)
 TArray<UMazeObjectSettings*> UMazeSettings::GetMazeObjects()
 {
 	return this->MazeObjects;
+}
+
+void UMazeSettings::ClearRegionSystemSettings()
+{
+	this->RegionSystemSettings.Empty();
+}
+
+void UMazeSettings::RemoveRegionSystemSetting(URegionSystemSettings* RegionSystemSettingValue)
+{
+	this->RegionSystemSettings.Remove(RegionSystemSettingValue);
+
+}
+
+void UMazeSettings::AddRegionSystemSetting(URegionSystemSettings* RegionSystemSettingValue)
+{
+	this->RegionSystemSettings.Add(RegionSystemSettingValue);
+}
+
+TArray<URegionSystemSettings*> UMazeSettings::GetRegionSystemSettings()
+{
+	return this->RegionSystemSettings;
+}
+
+
+URegionSystemSettings* UMazeSettings::GetSystemSettingById(FString SystemIdValue)
+{
+	for (URegionSystemSettings* System : this->GetRegionSystemSettings())
+	{
+		
+	}
+	return nullptr;
 }
 
 void UMazeSettings::ClearRegionSettings()

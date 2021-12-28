@@ -7,7 +7,6 @@
 #include "Settings/RodentVRSettings.h"
 #include "SimulatorGameMode.generated.h"
 
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMazeLoadedDelegate);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FMazeFinishedDelegate);
 
@@ -39,7 +38,7 @@ public:
 	ASimulatorGameMode();
 	
 	UPROPERTY(BlueprintReadOnly)
-		int CurrentMazeIndex = -1;
+		int CurrentMazeIndex = 0;
 
 	//UFUNCTION(BlueprintGetter)
 	//	URodentVRSettings* GetRodentVRSettings();

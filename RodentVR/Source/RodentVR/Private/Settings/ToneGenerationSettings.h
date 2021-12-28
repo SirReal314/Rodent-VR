@@ -19,6 +19,8 @@ private:
 		bool IsToneGenerationEnabled;
 	UPROPERTY(BlueprintGetter = GetToneDurationSec, BlueprintSetter = SetToneDurationSec)
 		float ToneDurationSec;
+	UPROPERTY(BlueprintGetter = GetIsPlayToneContinuouslyEnabled, BlueprintSetter = SetIsPlayToneContinuouslyEnabled)
+		bool PlayToneContinuously;
 	UPROPERTY(BlueprintGetter = GetTonePitchHz, BlueprintSetter = SetTonePitchHz)
 		float TonePitchHz;
 	UPROPERTY(BlueprintGetter = GetToneVolumePercent, BlueprintSetter = SetToneVolumePercent)
@@ -33,6 +35,10 @@ public:
 		float GetToneDurationSec();
 	UFUNCTION(BlueprintSetter)
 		void SetToneDurationSec(float ToneDurationSecValue);
+	UFUNCTION(BlueprintGetter)
+		bool GetIsPlayToneContinuouslyEnabled();
+	UFUNCTION(BlueprintSetter)
+		void SetIsPlayToneContinuouslyEnabled(bool IsPlayToneContinuouslyEnabledValue);
 	UFUNCTION(BlueprintGetter)
 		float GetTonePitchHz();
 	UFUNCTION(BlueprintSetter)
